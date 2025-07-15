@@ -2,62 +2,69 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from trainer.stepwise_dpo_trainer import StepwiseDPOTrainer
 from utils.load_rewarded_dataset import load_rewarded_dataset
-from trl import DPOConfig, DPOTrainer
+from trl import DPOConfig
 import torch
 import os
+
+def tokenize_function(sample, tokenizer):
+    prompt = tokenizer(
+        sample["prompt"],
+        truncation=True,
+        padding="max_length",
+        max_length=128,
+        return_tensors="pt"
+    )
+    chosen = tokenizer(
+        sample["chosen"],
+        truncation=True,
+        padding="max_length",
+        max_length=128,
+        return_tensors="pt"
+    )
+    rejected = tokenizer(
+        sample["rejected"],
+        truncation=True,
+        padding="max_length",
+        max_length=128,
+        return_tensors="pt"
+    )
+    
+    return {
+        "input_ids_prompt": prompt["input_ids"][0],
+        "attention_mask_prompt": prompt["attention_mask"][0],
+        "input_ids_chosen": chosen["input_ids"][0],
+        "attention_mask_chosen": chosen["attention_mask"][0],
+        "input_ids_rejected": rejected["input_ids"][0],
+        "attention_mask_rejected": rejected["attention_mask"][0],
+        "chosen_scores": sample["chosen_scores"],
+        "rejected_scores": sample["rejected_scores"],
+        "chosen": sample["chosen"],
+        "rejected": sample["rejected"]
+    }
+
 def main():
-    model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"  # change if you're using another
+    model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-    # Load tokenizer and model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float32)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    model = AutoModelForCausalLM.from_pretrained(model_name)
 
-    # Load dataset
     dataset = load_rewarded_dataset()
+    tokenized_dataset = dataset.map(
+        lambda x: tokenize_function(x, tokenizer),
+        remove_columns=dataset.column_names
+    )
+    print(f"Tokenized dataset features: {tokenized_dataset.features}")
 
-    # Tokenize prompt + responses
-    def tokenize(sample):
-        prompt_input_ids = tokenizer(
-            sample["prompt"],
-            truncation=True,
-            padding="max_length",
-            max_length=128
-        ).input_ids
-
-        chosen_input_ids = tokenizer(
-            sample["chosen"],
-            truncation=True,
-            padding="max_length",
-            max_length=128
-        ).input_ids
-
-        rejected_input_ids = tokenizer(
-            sample["rejected"],
-            truncation=True,
-            padding="max_length",
-            max_length=128
-        ).input_ids
-
-        return {
-            "prompt_input_ids": prompt_input_ids,
-            "chosen_input_ids": chosen_input_ids,
-            "rejected_input_ids": rejected_input_ids,
-            "chosen_scores": sample["chosen_scores"],      # ✅ returned explicitly
-            "rejected_scores": sample["rejected_scores"]   # ✅ returned explicitly
-        }
-
-
-
-    dataset = dataset.map(tokenize)
-
-    # Set training args
+    # Create output directory
     output_dir = "saved_model/stepwise_dpo_tinyllama"
     os.makedirs(output_dir, exist_ok=True)
 
     training_args = DPOConfig(
         output_dir=output_dir,
-        per_device_train_batch_size=2,
-        num_train_epochs=3,
+        per_device_train_batch_size=1, #2
+        num_train_epochs=1, #3
         logging_dir="./logs",
         logging_steps=1,
         save_total_limit=1,
@@ -66,21 +73,23 @@ def main():
         fp16=False,
         bf16=False,
         disable_tqdm=False,
-        report_to=None
+        report_to=None,
+        optim="adamw_torch"
     )
 
-    # Initialize trainer
     trainer = StepwiseDPOTrainer(
         model=model,
         args=training_args,
-        train_dataset=dataset
+        train_dataset=tokenized_dataset,
+        # preprocess_ref_log_probs=False,
+        data_collator=None, 
+        # preprocess_dataset=False
     )
 
-    # Start training
     trainer.train()
 
-    # Save final model
     trainer.save_model(output_dir)
+    tokenizer.save_pretrained(output_dir)
     print(f"Model saved to {output_dir}")
 
 if __name__ == "__main__":

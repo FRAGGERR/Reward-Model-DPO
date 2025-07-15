@@ -35,3 +35,6 @@ Thumbs.db
 *.tflitemodels/
 dpo-env/
 models/
+
+saved_models/
+.saved_models/
