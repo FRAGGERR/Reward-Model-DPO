@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environments
+env/
+venv/
+.dpo-env/
+*.env
+
+# VSCode / IDE
+.vscode/
+.idea/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Checkpoints & model files
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+*.bin
+*.safetensors
+
+# Huggingface cache
+~/.cache/huggingface/
+.models/
+*.tflitemodels/
+dpo-env/
+models/
