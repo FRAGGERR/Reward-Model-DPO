@@ -1,0 +1,38 @@
+# Stepwise DPO Training Log (TinyLlama)
+# Date: [15-07-2025]
+# Model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+# Dataset: synthetic + rewarded stepwise dataset
+# Epochs: 3
+# Batch Size: 1
+
+------------------------------------------------------------
+Tokenized dataset features:
+------------------------------------------------------------
+{'chosen': Value('string'), 'rejected': Value('string'), 'chosen_scores': List(Value('int64')), 'rejected_scores': List(Value('int64')), 'input_ids_prompt': List(Value('int64')), 'attention_mask_prompt': List(Value('int64')), 'input_ids_chosen': List(Value('int64')), 'attention_mask_chosen': List(Value('int64')), 'input_ids_rejected': List(Value('int64')), 'attention_mask_rejected': List(Value('int64'))}
+
+------------------------------------------------------------
+Training Progress:
+------------------------------------------------------------
+
+Step loss: 0.4741
+{'loss': 0.4741, 'grad_norm': 0.0, 'learning_rate': 1e-06, 'epoch': 0.07}
+Step loss: 0.9741
+{'loss': 0.9741, 'grad_norm': 0.0, 'learning_rate': 9.77e-07, 'epoch': 0.13}
+Step loss: 0.4741
+...
+...
+Step loss: 0.6931
+{'loss': 0.6931, 'grad_norm': 0.0, 'learning_rate': 2.22e-08, 'epoch': 3.00}
+
+------------------------------------------------------------
+Final Summary:
+------------------------------------------------------------
+
+{'train_runtime': 1.0391,
+ 'train_samples_per_second': 43.306,
+ 'train_steps_per_second': 43.306,
+ 'train_loss': 0.691846885283788,
+ 'epoch': 3.0}
+
+Model saved to:
+../saved_model/stepwise_dpo_tinyllama

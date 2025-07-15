@@ -64,7 +64,7 @@ def main():
     training_args = DPOConfig(
         output_dir=output_dir,
         per_device_train_batch_size=1, #2
-        num_train_epochs=1, #3
+        num_train_epochs=3, #3
         logging_dir="./logs",
         logging_steps=1,
         save_total_limit=1,
