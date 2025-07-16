@@ -48,18 +48,42 @@ Evaluation was done using a step-level scoring model (`TinyLlamaRewardScorer`). 
 
 ## 📈 Reward Score Evaluation
 
-Using a 4-bit TinyLlama reward model (`ctransformers`), we scored both the base and fine-tuned models on 15 examples.
+<p>Using a 4-bit TinyLlama reward model (<code>ctransformers</code>), we scored both the base and fine-tuned models on 15 examples.</p>
 
-| Metric               | Value       |
-|----------------------|-------------|
-| Base Avg Score       | 0.0000      |
-| Fine-Tuned Avg Score | 0.667       |
-| ✅ Improvement       | +0.667      |
-| Evaluation Size      | 15 examples |
+<div style="display: flex; align-items: center; gap: 50px;">
 
-<p align="center">
-  <img width="600" height="400" src="https://github.com/user-attachments/assets/115dabfb-f4c9-407b-8e7f-77dc1fb3ad3f" alt="Image" />
-</p>
+  <!-- Reward Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Base Avg Score</strong></td>
+        <td><strong>0.0000</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Fine-Tuned Avg Score</strong></td>
+        <td><strong>0.667</strong></td>
+      </tr>
+      <tr>
+        <td><strong>✅ Improvement</strong></td>
+        <td><strong>+0.667</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Evaluation Size</strong></td>
+        <td><strong>15 examples</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Reward Graph -->
+  <img src="https://github.com/user-attachments/assets/115dabfb-f4c9-407b-8e7f-77dc1fb3ad3f" width="500" alt="Reward Score Comparison" />
+
+</div>
 
 
 ---
