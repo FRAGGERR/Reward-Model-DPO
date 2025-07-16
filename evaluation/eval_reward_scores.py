@@ -16,10 +16,10 @@ def average_score(score_list):
     return sum(score_list) / len(score_list) if score_list else 0
 
 def evaluate_reward_scores():
-    print("🔁 Loading base model...")
+    print("Loading base model...")
     base_scorer = TinyLlamaRewardScorer(BASE_MODEL_PATH)
 
-    print("🔁 Loading fine-tuned model...")
+    print("Loading fine-tuned model...")
     tuned_scorer = TinyLlamaRewardScorer(TUNED_MODEL_PATH)
 
     with open(REWARDED_PATH, "r") as f:
@@ -27,7 +27,7 @@ def evaluate_reward_scores():
 
     results = []
 
-    print(f"🔍 Scoring {len(lines)} examples...")
+    print(f"Scoring {len(lines)} examples...")
 
     for line in tqdm(lines):
         item = json.loads(line)
@@ -57,6 +57,8 @@ def evaluate_reward_scores():
     improvement = tuned_avg - base_avg
 
     # Save results
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+
     with open(OUTPUT_PATH, "w") as f:
         json.dump({
             "base_avg_score_diff": base_avg,
@@ -65,10 +67,10 @@ def evaluate_reward_scores():
             "num_examples": len(results)
         }, f, indent=2)
 
-    print(f"✅ Saved reward comparison to {OUTPUT_PATH}")
-    print(f"\n📊 Base avg:   {base_avg:.4f}")
-    print(f"📊 Tuned avg:  {tuned_avg:.4f}")
-    print(f"📈 Improvement: {improvement:.4f}")
+    print(f"Saved reward comparison to {OUTPUT_PATH}")
+    print(f"\nBase avg:   {base_avg:.4f}")
+    print(f"Tuned avg:  {tuned_avg:.4f}")
+    print(f"Improvement: {improvement:.4f}")
 
 if __name__ == "__main__":
     evaluate_reward_scores()
