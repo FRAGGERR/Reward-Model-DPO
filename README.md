@@ -1,6 +1,5 @@
 <h1 align="center">Stepwise DPO Fine-Tuning with TinyLlama</h1>
 
----
 
 This project aims to replicate the methodology of OpenAI's “Let’s Verify Step by Step” using LLM-generated step-wise rewards instead of human labels. It not only showcases fine-tuning techniques but also emphasizes reasoning traceability and thoughtful experimentation. The focus is on implementing a reward model pipeline, customizing Hugging Face’s DPOTrainer, and evaluating improvements in reasoning capability on small models like TinyLlama (1.1B).
 
@@ -25,7 +24,7 @@ Evaluation was done using a step-level scoring model (`TinyLlamaRewardScorer`). 
   "improvement": 0.666,
   "num_examples": 15
 }
-s
+```
 
 ---
 
