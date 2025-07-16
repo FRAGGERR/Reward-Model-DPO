@@ -1,5 +1,12 @@
 <h1 align="center">Stepwise DPO Fine-Tuning with TinyLlama</h1>
 
+<p align="center">
+  <img alt="Transformers" src="https://img.shields.io/badge/🤖-Transformers-blue" />
+  <img alt="DPO" src="https://img.shields.io/badge/🔍-DPO-orange" />
+  <img alt="TinyLlama" src="https://img.shields.io/badge/🦙-TinyLlama-9cf" />
+  <img alt="Reward Modeling" src="https://img.shields.io/badge/📊-Reward_Modeling-brightgreen" />
+  <img alt="LLM" src="https://img.shields.io/badge/🧠-CausalLM-purple" />
+</p>
 
 This project aims to replicate the methodology of OpenAI's “Let’s Verify Step by Step” using LLM-generated step-wise rewards instead of human labels. It not only showcases fine-tuning techniques but also emphasizes reasoning traceability and thoughtful experimentation. The focus is on implementing a reward model pipeline, customizing Hugging Face’s DPOTrainer, and evaluating improvements in reasoning capability on small models like TinyLlama (1.1B).
 
