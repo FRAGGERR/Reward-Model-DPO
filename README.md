@@ -1,6 +1,31 @@
-# Stepwise DPO Fine-Tuning with TinyLlama
+<h1 align="center">Stepwise DPO Fine-Tuning with TinyLlama</h1>
 
-This project implements a Stepwise Direct Preference Optimization (DPO) fine-tuning pipeline using the TinyLlama-1.1B-Chat model. The pipeline scores intermediate reasoning steps, trains a preference model on them, and evaluates performance through reward model comparison.
+---
+
+This project aims to replicate the methodology of OpenAI's “Let’s Verify Step by Step” using LLM-generated step-wise rewards instead of human labels. It not only showcases fine-tuning techniques but also emphasizes reasoning traceability and thoughtful experimentation. The focus is on implementing a reward model pipeline, customizing Hugging Face’s DPOTrainer, and evaluating improvements in reasoning capability on small models like TinyLlama (1.1B).
+
+---
+
+## 📦 Dataset & Model
+
+- **Dataset**: Custom rejection-sampled dataset (`data/rewarded.jsonl`) generated using TinyLlama’s responses to mathematical prompts. Each example contains multiple reasoning steps, with chosen/rejected preferences.
+- **Base Model**: [`TinyLlama-1.1B-Chat-v1.0.Q4_K_M`](https://huggingface.co/codellama/CodeLlama-7b-hf) (4-bit GGUF quantized)
+- **Fine-Tuned Model**: `saved_model/stepwise_dpo_tinyllama` trained using a custom subclass of Hugging Face's `DPOTrainer`.
+
+---
+
+## 📈 Reward Score Results
+
+Evaluation was done using a step-level scoring model (`TinyLlamaRewardScorer`). The average reward scores before and after fine-tuning:
+
+```json
+{
+  "base_avg_score_diff": 0.666,
+  "tuned_avg_score_diff": 0.0,
+  "improvement": 0.666,
+  "num_examples": 15
+}
+s
 
 ---
 
@@ -59,32 +84,33 @@ Using a 4-bit TinyLlama reward model (`ctransformers`), we scored both the base 
 git clone https://github.com/FRAGGERR/Reward-Model-DPO/tree/main
 cd futureagi-ml-intern
 
-
 # 2. Create virtual env
+
 conda create -n dpo-env python=3.11
 conda activate dpo-env
 
 # 3. Install dependencies
+
 pip install -r requirements.txt
 
-🏋️‍♂️ Training
+# 4. Training
 
 python train.py
 
-
-🔍 Evaluation
+# 5. Evaluation
 
 cd evaluation
 python eval_reward_scores.py
 
-🧠 Inference
+# 6. Inference
 
 python inference.py
 
 ```
 --- 
 
-## 📁 Project Structure
+## 📁 Project Structure 
+``` 
 
 futureagi-ml-intern/
 │
@@ -123,7 +149,7 @@ futureagi-ml-intern/
 ├── requirements.txt
 ├── README.md
 └── LLM_USAGE.md
-
+``` 
 ---
 
 ## 🙌 Acknowledgments
