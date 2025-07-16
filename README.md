@@ -53,9 +53,11 @@ Using a 4-bit TinyLlama reward model (`ctransformers`), we scored both the base 
 | Metric               | Value       |
 |----------------------|-------------|
 | Base Avg Score       | 0.0000      |
-| Fine-Tuned Avg Score | 0.0667      |
-| ✅ Improvement       | +0.0667     |
+| Fine-Tuned Avg Score | 0.667       |
+| ✅ Improvement       | +0.667      |
 | Evaluation Size      | 15 examples |
+
+<img width="600" height="400" alt="Image" src="https://github.com/user-attachments/assets/115dabfb-f4c9-407b-8e7f-77dc1fb3ad3f" />
 
 ---
 
@@ -107,6 +109,21 @@ python inference.py
 
 ```
 --- 
+
+## Download Fine-Tuned Model
+
+To use the fine-tuned TinyLlama model (saved after Stepwise DPO training), download it from the following link:
+
+🔗 **[Download Fine-Tuned Model (Google Drive)](https://drive.google.com/drive/folders/1Sqs2_OMrIeB5Q4Ei3PqQDcUwEin5XA_C?usp=drive_link)**
+
+Place the downloaded folder into:
+
+```
+saved_model/stepwise_dpo_tinyllama/
+```
+> This folder must contain all necessary files like `pytorch_model.bin`, `config.json`, `tokenizer.json`, etc.
+
+---
 
 ## 📁 Project Structure 
 ``` 
