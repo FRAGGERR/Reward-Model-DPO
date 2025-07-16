@@ -57,7 +57,10 @@ Using a 4-bit TinyLlama reward model (`ctransformers`), we scored both the base 
 | ✅ Improvement       | +0.667      |
 | Evaluation Size      | 15 examples |
 
-<img width="600" height="400" alt="Image" src="https://github.com/user-attachments/assets/115dabfb-f4c9-407b-8e7f-77dc1fb3ad3f" />
+<p align="center">
+  <img width="600" height="400" src="https://github.com/user-attachments/assets/115dabfb-f4c9-407b-8e7f-77dc1fb3ad3f" alt="Image" />
+</p>
+
 
 ---
 
