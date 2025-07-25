@@ -26,8 +26,8 @@ Evaluation was done using a step-level scoring model (`TinyLlamaRewardScorer`). 
 
 ```json
 {
-  "base_avg_score_diff": 0.666,
-  "tuned_avg_score_diff": 0.0,
+  "base_avg_score_diff": 0.0,
+  "tuned_avg_score_diff": 0.666,
   "improvement": 0.666,
   "num_examples": 15
 }
